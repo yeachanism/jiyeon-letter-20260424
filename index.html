@@ -799,14 +799,20 @@
     .seal {
       position: absolute;
       left: 50%;
-      bottom: 23.5%;
-      width: 62px;
-      height: 62px;
-      transform: translateX(-50%) rotate(-45deg);
-      background: linear-gradient(180deg, #f3a8b6 0%, #e58ea0 100%);
-      border-radius: 14px;
+      bottom: 22%;
+      width: 74px;
+      height: 74px;
+      transform: translateX(-50%);
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 24%, rgba(255,255,255,0.55) 0 8%, transparent 9%),
+        radial-gradient(circle at 50% 58%, rgba(179, 82, 102, 0.18) 0 42%, transparent 43%),
+        linear-gradient(180deg, #f6adbb 0%, #e38398 100%);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.48),
+        inset 0 2px 0 rgba(255,255,255,0.42),
+        inset 0 -8px 14px rgba(177, 88, 105, 0.18),
         0 12px 18px rgba(214, 145, 159, 0.26);
       z-index: 7;
       transition: opacity 340ms ease, transform 340ms ease;
@@ -817,56 +823,56 @@
     .seal::after {
       content: "";
       position: absolute;
-      width: 62px;
-      height: 62px;
       border-radius: 50%;
-      background: inherit;
+      pointer-events: none;
     }
 
     .seal::before {
-      top: -31px;
-      left: 0;
+      inset: 8px;
+      border: 1px solid rgba(255, 236, 241, 0.82);
+      box-shadow: inset 0 1px 4px rgba(171, 82, 99, 0.16);
     }
 
     .seal::after {
-      top: 0;
-      left: 31px;
+      inset: 15px;
+      background: rgba(255, 240, 244, 0.16);
+      box-shadow: inset 0 1px 4px rgba(171, 82, 99, 0.18);
     }
 
-    .seal span {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      transform: rotate(45deg) translate(10px, -10px);
-      color: rgba(255, 242, 245, 0.96);
-      font-size: 22px;
-      line-height: 1;
-      letter-spacing: -0.08em;
+    .seal svg {
+      width: 38px;
+      height: 36px;
       z-index: 2;
-      text-shadow: 0 1px 0 rgba(214, 120, 140, 0.24);
+      filter: drop-shadow(0 1px 0 rgba(184, 91, 109, 0.28));
+    }
+
+    .seal-heart {
+      fill: rgba(255, 248, 250, 0.96);
+      stroke: rgba(255, 255, 255, 0.64);
+      stroke-width: 1.5;
+      stroke-linejoin: round;
     }
 
 
     .journey[data-progress="1"] .seal {
-      transform: translateX(-50%) rotate(-45deg) scale(0.94);
+      transform: translateX(-50%) scale(0.94);
       opacity: 0.94;
     }
 
     .journey[data-progress="2"] .seal {
-      transform: translateX(-50%) rotate(-45deg) scale(0.86);
+      transform: translateX(-50%) scale(0.86);
       opacity: 0.76;
     }
 
     .journey[data-progress="3"] .seal {
-      transform: translateX(-50%) rotate(-45deg) scale(0.72);
+      transform: translateX(-50%) scale(0.72);
       opacity: 0.42;
     }
 
     .journey.is-opening .seal,
     .journey.is-opened .seal {
       opacity: 0;
-      transform: translateX(-50%) rotate(-45deg) scale(0.64);
+      transform: translateX(-50%) scale(0.64);
     }
 
     .scene-caption {
@@ -1544,7 +1550,11 @@
                       <span>♡</span><span>♡</span><span>♥</span>
                     </div>
 
-                    <div id="seal" class="seal"><span>౨ৎ</span></div>
+                    <div id="seal" class="seal">
+                      <svg viewBox="0 0 64 58" aria-hidden="true" focusable="false">
+                        <path class="seal-heart" d="M32 52.5S7.5 37.8 7.5 21.6C7.5 12.7 13.4 7 21.1 7c4.7 0 8.8 2.5 10.9 6.3C34.1 9.5 38.2 7 42.9 7c7.7 0 13.6 5.7 13.6 14.6C56.5 37.8 32 52.5 32 52.5Z" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>
