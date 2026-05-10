@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Letter For You</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,8 +25,8 @@
       --ink-soft: #7b6b63;
       --line: rgba(126, 96, 83, 0.12);
       --line-strong: rgba(126, 96, 83, 0.24);
-      --shadow-card: 0 24px 60px rgba(92, 70, 60, 0.10);
-      --shadow-paper: 0 28px 56px rgba(92, 70, 60, 0.14);
+      --shadow-card: 0 28px 72px rgba(92, 70, 60, 0.12), inset 0 1px 0 rgba(255,255,255,0.52);
+      --shadow-paper: 0 34px 74px rgba(92, 70, 60, 0.16), inset 0 1px 0 rgba(255,255,255,0.62);
       --radius-xl: 34px;
       --radius-lg: 26px;
       --radius-md: 18px;
@@ -140,9 +140,9 @@
     .journey {
       position: relative;
       z-index: 1;
-      width: min(1480px, calc(100% - 32px));
+      width: min(1420px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 24px 0 72px;
+      padding: clamp(18px, 2.4vw, 34px) 0 clamp(56px, 6vw, 78px);
     }
 
     .top-note {
@@ -170,17 +170,20 @@
       position: relative;
       display: grid;
       align-items: center;
+      align-content: center;
     }
 
     .scene-before {
-      min-height: calc(100vh - 120px);
+      min-height: calc(100vh - 72px);
+      min-height: calc(100svh - 72px);
     }
 
     .scene-grid {
       display: grid;
-      grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
-      gap: 26px;
-      align-items: stretch;
+      grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+      gap: clamp(20px, 2.4vw, 34px);
+      align-items: center;
+      width: 100%;
     }
 
     .surface-card {
@@ -203,7 +206,8 @@
     }
 
     .intro-card {
-      padding: 28px 26px 24px;
+      align-self: center;
+      padding: clamp(24px, 3vw, 34px) clamp(22px, 2.6vw, 30px) clamp(24px, 3vw, 32px);
     }
 
     .eyebrow {
@@ -213,8 +217,9 @@
       margin-bottom: 14px;
       color: var(--accent-ink);
       font-size: 12px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: none;
     }
 
     .eyebrow::before {
@@ -243,16 +248,17 @@
     .status-stack {
       display: grid;
       gap: 14px;
-      margin: 26px 0 20px;
+      margin: 28px 0 0;
     }
 
     .status-card {
       display: grid;
       gap: 10px;
-      padding: 16px 18px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.48);
-      border: 1px solid rgba(126, 96, 83, 0.10);
+      padding: 17px 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.58);
+      border: 1px solid rgba(126, 96, 83, 0.11);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.52), 0 10px 24px rgba(92, 70, 60, 0.05);
     }
 
     .status-label {
@@ -268,14 +274,17 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 76px;
-      height: 32px;
-      padding: 0 12px;
+      min-width: 82px;
+      min-height: 32px;
+      padding: 0 13px;
       border-radius: var(--radius-pill);
       color: var(--accent-ink);
-      background: rgba(228, 211, 197, 0.48);
-      border: 1px solid rgba(185, 136, 142, 0.18);
-      font-size: 12px;
+      background: rgba(228, 211, 197, 0.54);
+      border: 1px solid rgba(185, 136, 142, 0.20);
+      font-size: 12.5px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
     }
 
     .progress-track {
@@ -304,16 +313,17 @@
       position: absolute;
       left: 50%;
       top: auto;
-      width: min(350px, calc(100% - 56px));
-      padding: 16px 16px 16px;
-      border-radius: 24px;
-      background: rgba(255, 250, 245, 0.14);
-      border: 1px solid rgba(255,255,255,0.30);
+      width: min(388px, calc(100% - 52px));
+      padding: 18px;
+      border-radius: 26px;
+      background: rgba(255, 250, 245, 0.82);
+      border: 1px solid rgba(255,255,255,0.64);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.52),
-        0 10px 22px rgba(92, 70, 60, 0.06);
-      backdrop-filter: blur(5px) saturate(104%);
-      bottom: 24px;
+        inset 0 1px 0 rgba(255,255,255,0.74),
+        0 18px 44px rgba(92, 70, 60, 0.16),
+        0 4px 14px rgba(167, 119, 125, 0.10);
+      backdrop-filter: blur(14px) saturate(112%);
+      bottom: clamp(20px, 3vw, 34px);
       transform: translate(-50%, 0);
       transition: opacity 320ms ease, transform 320ms ease;
       z-index: 18;
@@ -335,7 +345,8 @@
 
     .quiz-title {
       margin: 0;
-      font-size: 18px;
+      font-size: 17.5px;
+      line-height: 1.45;
       color: var(--ink);
     }
 
@@ -376,18 +387,21 @@
       color: var(--ink);
       line-height: 1.8;
       font-size: 15px;
+      font-weight: 500;
     }
 
     .quiz-input {
       width: 100%;
-      height: 46px;
+      height: 50px;
       padding: 0 16px;
-      border-radius: 14px;
-      border: 1px solid rgba(126, 96, 83, 0.18);
-      background: rgba(255,255,255,0.34);
+      border-radius: 16px;
+      border: 1px solid rgba(126, 96, 83, 0.20);
+      background: rgba(255,255,255,0.82);
       color: var(--ink);
       outline: none;
-      transition: border-color var(--ease), box-shadow var(--ease), transform var(--ease);
+      -webkit-appearance: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.58);
+      transition: border-color var(--ease), box-shadow var(--ease), transform var(--ease), background var(--ease);
     }
 
     .quiz-input::placeholder {
@@ -427,20 +441,27 @@
     .quiz-hint.ok { color: #81716a; }
 
     .quiz-btn {
-      height: 44px;
-      padding: 0 18px;
+      min-height: 48px;
+      padding: 0 20px;
       border: 0;
       border-radius: var(--radius-pill);
-      background: linear-gradient(180deg, #b98f93 0%, #a7777d 100%);
+      background: linear-gradient(180deg, #b57782 0%, #925d67 100%);
       color: #fff;
       cursor: pointer;
-      box-shadow: 0 12px 24px rgba(167, 119, 125, 0.18);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      box-shadow: 0 16px 30px rgba(146, 93, 103, 0.30);
       transition: transform var(--ease), box-shadow var(--ease), opacity var(--ease);
     }
 
     .quiz-btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 14px 28px rgba(167, 119, 125, 0.24);
+      box-shadow: 0 20px 38px rgba(146, 93, 103, 0.34);
+    }
+
+    .quiz-btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(216, 189, 193, 0.28), 0 18px 34px rgba(167, 119, 125, 0.28);
     }
 
     .quiz-btn:active { transform: translateY(0); }
@@ -453,7 +474,7 @@
     }
 
     .envelope-panel {
-      padding: 26px;
+      padding: clamp(20px, 2.4vw, 30px);
       min-height: 100%;
     }
 
@@ -478,10 +499,12 @@
 
     .panel-title {
       margin: 0;
-      font-size: 14px;
-      color: var(--ink-soft);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      font-size: 15px;
+      line-height: 1.45;
+      color: var(--accent-ink);
+      letter-spacing: -0.01em;
+      text-transform: none;
+      font-weight: 600;
     }
 
     .panel-copy {
@@ -495,8 +518,8 @@
       position: relative;
       display: grid;
       place-items: center;
-      min-height: 900px;
-      padding: 16px 0 6px;
+      min-height: clamp(540px, 68vh, 680px);
+      padding: clamp(18px, 3vw, 30px) 0 clamp(16px, 3vw, 28px);
       border-radius: 28px;
       background:
         linear-gradient(180deg, rgba(255,255,255,0.20), transparent 30%),
@@ -519,12 +542,12 @@
 
     .envelope-scene {
       position: relative;
-      width: min(100%, 720px);
+      width: min(100%, 680px);
       aspect-ratio: 1.48 / 1;
       perspective: 1800px;
       display: grid;
       place-items: center;
-      margin-top: 88px;
+      margin-top: clamp(8px, 3vh, 28px);
     }
 
 
@@ -560,7 +583,7 @@
       position: absolute;
       inset: 8% 4% 14%;
       transform-style: preserve-3d;
-      transform: scale(1.5);
+      transform: scale(1.44);
       transform-origin: center 56%;
     }
 
@@ -1224,7 +1247,7 @@
       }
 
       .desk-stage {
-        min-height: 700px;
+        min-height: 620px;
       }
 
       .panel-heading,
@@ -1248,7 +1271,16 @@
       }
 
       .desk-stage {
-        min-height: 620px;
+        min-height: 560px;
+      }
+
+      .envelope-scene {
+        width: min(100%, 560px);
+        margin-top: 0;
+      }
+
+      .envelope-frame {
+        transform: scale(1.05);
       }
 
       .scene-caption {
@@ -1260,9 +1292,9 @@
       }
 
       .quiz-card {
-        width: min(100% - 20px, 320px);
+        width: min(100% - 20px, 340px);
         top: auto;
-        bottom: 16px;
+        bottom: 14px;
         transform: translate(-50%, 0);
       }
 
@@ -1457,8 +1489,9 @@
       <section id="sceneBefore" class="scene scene-before" aria-labelledby="sceneBeforeTitle">
         <div class="scene-grid">
           <aside class="surface-card intro-card">
-            <div class="eyebrow">Private Correspondence</div>
+            <div class="eyebrow">오직 너에게만</div>
             <h1 id="sceneBeforeTitle" class="intro-title">봉인된 편지 한 장</h1>
+            <p class="intro-copy">세 개의 기억을 하나씩 남기면, 지연이에게만 열리는 편지가 조용히 펼쳐져요.</p>
             <!-- UX note: two-stage flow. The sealed envelope is the focus on the first screen,
                  and each correct answer gradually releases the seal until the final transition. -->
 
@@ -1471,7 +1504,7 @@
                 <div class="progress-track" aria-hidden="true">
                   <div id="progressFill" class="progress-fill"></div>
                 </div>
-                <p id="progressMessage" class="status-copy">첫 번째 기억을 떠올리면 봉투의 첫 번째 잠금이 느슨해집니다.</p>
+                <p id="progressMessage" class="status-copy">첫 번째 기억을 적으면 봉투가 조용히 열리기 시작해요.</p>
               </div>
             </div>
 
@@ -1481,10 +1514,10 @@
           <div class="surface-card envelope-panel">
             <div class="panel-heading">
               <div>
-                <p class="panel-title">Sealed envelope scene</p>
+                <p class="panel-title">기억으로 봉인된 편지</p>
                 <!-- UX note: the quiz overlay is layered on the envelope and fully opens after the final correct answer. -->
               </div>
-              <span id="statusBadge" class="progress-pill">sealed</span>
+              <span id="statusBadge" class="progress-pill">봉인 3개 남음</span>
             </div>
 
             <div class="desk-stage">
@@ -1518,8 +1551,8 @@
 
               <div id="quizCard" class="quiz-card">
                 <div class="quiz-header">
-                  <h2 class="quiz-title">기억을 따라 봉인을 풀어볼까요</h2>
-                  <span class="progress-pill">질문</span>
+                  <h2 class="quiz-title">세 가지 기억으로 편지를 열어줘</h2>
+                  <span id="quizStageBadge" class="progress-pill">첫 번째 기억</span>
                 </div>
 
                 <div class="step-dots" aria-hidden="true">
@@ -1529,26 +1562,26 @@
                 </div>
 
                 <div id="step1" class="quiz-step active">
-                  <label class="quiz-label" for="q1">Q1. 우리가 처음 만난 날은?</label>
-                  <input id="q1" class="quiz-input" type="text" placeholder="2023.??.??" />
+                  <label class="quiz-label" for="q1">첫 번째 기억 — 우리가 처음 만난 날은?</label>
+                  <input id="q1" class="quiz-input" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint1" placeholder="YYYY.MM.DD" />
                   <div class="quiz-actions">
                     <div id="hint1" class="quiz-hint"></div>
-                    <button class="quiz-btn" type="button" data-submit-step="1">확인</button>
+                    <button class="quiz-btn" type="button" data-submit-step="1">봉인 풀기</button>
                   </div>
                 </div>
 
                 <div id="step2" class="quiz-step">
-                  <label class="quiz-label" for="q2">Q2. 우리가 사귀게 된 장소는?</label>
-                  <input id="q2" class="quiz-input" type="text" placeholder="~천국" />
+                  <label class="quiz-label" for="q2">두 번째 기억 — 우리가 사귀게 된 장소는?</label>
+                  <input id="q2" class="quiz-input" type="text" autocomplete="off" aria-describedby="hint2" placeholder="~천국" />
                   <div class="quiz-actions">
                     <div id="hint2" class="quiz-hint"></div>
-                    <button class="quiz-btn" type="button" data-submit-step="2">확인</button>
+                    <button class="quiz-btn" type="button" data-submit-step="2">봉인 풀기</button>
                   </div>
                 </div>
 
                 <div id="step3" class="quiz-step">
-                  <label class="quiz-label" for="q3">Q3. 마지막으로, 하고 싶은 말을 아무렇게나 남겨줘.</label>
-                  <input id="q3" class="quiz-input" type="text" placeholder="짧아도 괜찮아" />
+                  <label class="quiz-label" for="q3">마지막 마음 — 하고 싶은 말을 아무렇게나 남겨줘.</label>
+                  <input id="q3" class="quiz-input" type="text" autocomplete="off" aria-describedby="hint3" placeholder="짧아도 괜찮아" />
                   <div class="quiz-actions">
                     <div id="hint3" class="quiz-hint"></div>
                     <button class="quiz-btn" type="button" data-submit-step="3">편지 열기</button>
@@ -1669,6 +1702,7 @@
     const progressFill = document.getElementById('progressFill');
     const progressPill = document.getElementById('progressPill');
     const progressMessage = document.getElementById('progressMessage');
+    const quizStageBadge = document.getElementById('quizStageBadge');
     const quizCard = document.getElementById('quizCard');
     const statusBadge = document.getElementById('statusBadge');
     const successGlow = document.getElementById('successGlow');
@@ -1761,7 +1795,7 @@
       const input = document.getElementById(`q${step}`);
       input.classList.remove('correct');
       input.classList.add('wrong');
-      setHint(step, 'err', '조금만 더 떠올려볼까요.');
+      setHint(step, 'err', '아직 봉인이 살짝 버티고 있어요. 우리 기억을 한 번 더 떠올려줘.');
       void input.offsetWidth;
     }
 
@@ -1769,7 +1803,7 @@
       const input = document.getElementById(`q${step}`);
       input.classList.remove('wrong');
       input.classList.add('correct');
-      setHint(step, 'ok', '좋아요. 봉투의 봉인이 한 단계 더 풀렸어요.');
+      setHint(step, 'ok', '좋아요. 기억 하나가 봉인을 풀었어요.');
     }
 
 
@@ -1810,10 +1844,23 @@
     }
 
     function getProgressMessage(step) {
-      if (step === 0) return '첫 번째 기억을 떠올리면 봉투의 첫 번째 잠금이 느슨해집니다.';
-      if (step === 1) return '첫 번째 접힘선이 살짝 들렸어요. 이제 플랩이 천천히 열리기 시작합니다.';
-      if (step === 2) return '왁스 봉인이 거의 풀렸어요. 마지막 답을 남기면 봉투가 완전히 열립니다.';
-      return '봉인이 풀렸어요. 열린 편지 화면으로 이동합니다.';
+      if (step === 0) return '첫 번째 기억을 적으면 봉투가 조용히 열리기 시작해요.';
+      if (step === 1) return '좋아요. 이제 두 번째 기억을 남기면 접힌 플랩이 더 가볍게 들려요.';
+      if (step === 2) return '마지막 마음만 남기면, 편지가 너에게 완전히 펼쳐져요.';
+      return '봉인이 모두 풀렸어요. 편지를 펼치고 있어요.';
+    }
+
+    function getStatusLabel(step) {
+      if (step === 0) return '봉인 3개 남음';
+      if (step === 1) return '봉인 2개 남음';
+      if (step === 2) return '마지막 봉인';
+      return '편지 열 준비 완료';
+    }
+
+    function getStepLabel(step) {
+      if (step === 1) return '첫 번째 기억';
+      if (step === 2) return '두 번째 기억';
+      return '마지막 마음';
     }
 
     function updateProgress() {
@@ -1821,7 +1868,7 @@
       progressFill.style.width = `${(solvedSteps / 3) * 100}%`;
       progressPill.textContent = `${solvedSteps} / 3`;
       progressMessage.textContent = getProgressMessage(solvedSteps);
-      statusBadge.textContent = solvedSteps === 3 ? 'ready to unfold' : solvedSteps === 0 ? 'sealed' : solvedSteps === 1 ? 'first fold released' : 'seal nearly broken';
+      statusBadge.textContent = getStatusLabel(solvedSteps);
 
       [1, 2, 3].forEach((index) => {
         const dot = document.getElementById(`stepDot${index}`);
@@ -1841,6 +1888,8 @@
           dotEl.classList.toggle('done', index < step || index <= solvedSteps);
         }
       });
+
+      if (quizStageBadge) quizStageBadge.textContent = getStepLabel(step);
 
       const input = document.querySelector(`#step${step} .quiz-input`);
       if (input) setTimeout(() => input.focus(), 80);
@@ -1944,13 +1993,13 @@
       opened = true;
       journey.classList.add('is-opening');
       quizCard.classList.add('hide');
-      statusBadge.textContent = 'opening';
+      statusBadge.textContent = '편지를 여는 중';
       flashSuccess();
 
       setTimeout(() => {
         journey.classList.remove('is-opening');
         journey.classList.add('is-opened');
-        statusBadge.textContent = 'opened';
+        statusBadge.textContent = '편지가 열렸어요';
         sceneAfter.scrollIntoView({ behavior: 'smooth', block: 'start' });
         playLetterVideoSequence();
       }, 1100);
