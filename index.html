@@ -559,7 +559,7 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      z-index: 20;
+      z-index: 28;
       overflow: visible;
     }
 
@@ -698,7 +698,11 @@
       transform-origin: top center;
       transform: rotateX(0deg);
       z-index: 6;
-      transition: transform var(--ease-slow), filter var(--ease), box-shadow var(--ease-slow);
+      transition:
+        transform 880ms cubic-bezier(.18,.74,.22,1),
+        filter var(--ease),
+        box-shadow var(--ease-slow);
+      transition-delay: 0ms;
       backface-visibility: hidden;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.62), 0 8px 16px rgba(212, 154, 166, 0.10);
     }
@@ -750,24 +754,31 @@
     }
 
     .journey[data-progress="1"] .envelope-flap {
-      transform: rotateX(18deg);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 12px 18px rgba(88, 62, 48, 0.08);
+      transform: rotateX(0deg);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.48), 0 10px 16px rgba(88, 62, 48, 0.07);
     }
 
     .journey[data-progress="2"] .envelope-flap {
-      transform: rotateX(34deg);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 14px 20px rgba(88, 62, 48, 0.10);
+      transform: rotateX(0deg) translateY(-1px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.42), 0 12px 18px rgba(88, 62, 48, 0.09);
     }
 
     .journey[data-progress="3"] .envelope-flap {
-      transform: rotateX(52deg);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 16px 24px rgba(88, 62, 48, 0.12);
+      transform: rotateX(0deg) translateY(-1px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.36), 0 14px 22px rgba(88, 62, 48, 0.10);
     }
 
-    .journey.is-opening .envelope-flap,
+    .journey.is-opening .envelope-flap {
+      transform: rotateX(180deg);
+      filter: brightness(0.98);
+      transition-delay: 680ms;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.24), 0 18px 28px rgba(88, 62, 48, 0.12);
+    }
+
     .journey.is-opened .envelope-flap {
       transform: rotateX(180deg);
       filter: brightness(0.98);
+      transition-delay: 0ms;
     }
 
 
@@ -797,15 +808,25 @@
     .envelope-doodles.right span:nth-child(2) { font-size: 36px; }
 
     .seal {
+      --seal-y: 0px;
+      --seal-rotate: 0deg;
+      --seal-scale: 1;
+      --main-crack-offset: 58;
+      --main-crack-opacity: 0;
+      --branch-crack-offset: 30;
+      --branch-crack-opacity: 0;
       position: absolute;
       left: 50%;
-      bottom: 22%;
-      width: 74px;
-      height: 74px;
-      transform: translateX(-50%);
+      bottom: 30.2%;
+      width: clamp(78px, 13.4%, 108px);
+      aspect-ratio: 1;
+      height: auto;
+      transform: translateX(-50%) translateY(var(--seal-y)) rotate(var(--seal-rotate)) scale(var(--seal-scale));
+      transform-origin: 50% 56%;
       display: grid;
       place-items: center;
       border-radius: 50%;
+      overflow: visible;
       background:
         radial-gradient(circle at 30% 24%, rgba(255,255,255,0.55) 0 8%, transparent 9%),
         radial-gradient(circle at 50% 58%, rgba(179, 82, 102, 0.18) 0 42%, transparent 43%),
@@ -814,9 +835,14 @@
         inset 0 2px 0 rgba(255,255,255,0.42),
         inset 0 -8px 14px rgba(177, 88, 105, 0.18),
         0 12px 18px rgba(214, 145, 159, 0.26);
-      z-index: 7;
-      transition: opacity 340ms ease, transform 340ms ease;
+      z-index: 22;
+      transition:
+        opacity 420ms ease,
+        transform 420ms cubic-bezier(.2,.75,.18,1),
+        filter 420ms ease,
+        box-shadow 420ms ease;
       pointer-events: none;
+      will-change: transform, opacity, filter;
     }
 
     .seal::before,
@@ -828,21 +854,25 @@
     }
 
     .seal::before {
-      inset: 8px;
+      inset: 10.8%;
       border: 1px solid rgba(255, 236, 241, 0.82);
       box-shadow: inset 0 1px 4px rgba(171, 82, 99, 0.16);
+      z-index: 1;
+      transition: border-color 320ms ease, transform 420ms ease, opacity 320ms ease;
     }
 
     .seal::after {
-      inset: 15px;
+      inset: 20.3%;
       background: rgba(255, 240, 244, 0.16);
       box-shadow: inset 0 1px 4px rgba(171, 82, 99, 0.18);
+      z-index: 2;
+      transition: transform 420ms ease, opacity 320ms ease;
     }
 
-    .seal svg {
-      width: 38px;
-      height: 36px;
-      z-index: 2;
+    .seal-heart-icon {
+      width: 51%;
+      height: 49%;
+      z-index: 4;
       filter: drop-shadow(0 1px 0 rgba(184, 91, 109, 0.28));
     }
 
@@ -851,28 +881,244 @@
       stroke: rgba(255, 255, 255, 0.64);
       stroke-width: 1.5;
       stroke-linejoin: round;
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: fill 320ms ease, opacity 320ms ease, transform 420ms ease;
     }
 
+    .seal-cracks {
+      position: absolute;
+      inset: -1px;
+      width: calc(100% + 2px);
+      height: calc(100% + 2px);
+      z-index: 5;
+      overflow: visible;
+      filter: drop-shadow(0 1px 0 rgba(255,255,255,0.32));
+    }
+
+    .seal-crack {
+      fill: none;
+      stroke: rgba(112, 43, 64, 0.82);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke-dashoffset 520ms cubic-bezier(.2,.75,.18,1), opacity 260ms ease;
+    }
+
+    .seal-crack-main {
+      stroke-width: 2.35;
+      stroke-dasharray: 58;
+      stroke-dashoffset: var(--main-crack-offset);
+      opacity: var(--main-crack-opacity);
+    }
+
+    .seal-crack-branch {
+      stroke-width: 1.75;
+      stroke-dasharray: 30;
+      stroke-dashoffset: var(--branch-crack-offset);
+      opacity: var(--branch-crack-opacity);
+    }
+
+    .seal-strain {
+      position: absolute;
+      left: 50%;
+      top: 13.5%;
+      width: 5.4%;
+      height: 73%;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.62), rgba(128, 54, 74, 0.22), rgba(255, 236, 241, 0.18));
+      opacity: 0;
+      transform: translateX(-50%) rotate(6deg) scaleY(0.18);
+      transform-origin: 50% 50%;
+      filter: blur(0.2px);
+      z-index: 3;
+      transition: opacity 320ms ease, transform 420ms cubic-bezier(.2,.75,.18,1);
+    }
+
+    .seal-adhesion {
+      position: absolute;
+      left: 50%;
+      bottom: -20%;
+      width: 30%;
+      height: 34%;
+      border-radius: 50% 50% 72% 72% / 20% 20% 86% 86%;
+      background: linear-gradient(180deg, rgba(229, 132, 151, 0.78), rgba(188, 91, 111, 0.42));
+      clip-path: polygon(36% 0, 64% 0, 80% 100%, 20% 100%);
+      opacity: 0;
+      transform: translateX(-50%) scaleY(0.18);
+      transform-origin: top center;
+      z-index: 0;
+      filter: blur(0.15px);
+      transition: opacity 320ms ease, transform 420ms cubic-bezier(.2,.75,.18,1);
+    }
+
+    .seal-flake {
+      position: absolute;
+      width: 15%;
+      height: 12%;
+      border-radius: 68% 32% 58% 42% / 48% 60% 40% 52%;
+      background: linear-gradient(180deg, #f8b4c0, #dc7e94);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.38), 0 4px 8px rgba(173, 83, 101, 0.18);
+      opacity: 0;
+      z-index: 6;
+      transform: translate3d(0, 0, 0) scale(0.62) rotate(var(--flake-rotate, 0deg));
+      transition: opacity 260ms ease, transform 420ms cubic-bezier(.2,.75,.18,1);
+    }
+
+    .seal-flake-one {
+      left: 20%;
+      top: 22%;
+      --flake-rotate: -28deg;
+      --flake-x: -30px;
+      --flake-y: -24px;
+      --flake-release-rotate: -118deg;
+    }
+
+    .seal-flake-two {
+      right: 18%;
+      top: 38%;
+      width: 12%;
+      height: 11%;
+      --flake-rotate: 24deg;
+      --flake-x: 34px;
+      --flake-y: -18px;
+      --flake-release-rotate: 96deg;
+    }
+
+    .seal-flake-three {
+      left: 39%;
+      bottom: 12%;
+      width: 11%;
+      height: 9%;
+      --flake-rotate: 12deg;
+      --flake-x: -8px;
+      --flake-y: 34px;
+      --flake-release-rotate: 62deg;
+    }
 
     .journey[data-progress="1"] .seal {
-      transform: translateX(-50%) scale(0.94);
-      opacity: 0.94;
+      --seal-scale: 0.99;
+      --seal-rotate: -0.6deg;
+      --main-crack-offset: 30;
+      --main-crack-opacity: 0.82;
+      animation: sealMicroShake 1380ms ease-in-out infinite;
+    }
+
+    .journey[data-progress="1"] .seal::before {
+      border-color: rgba(255, 228, 236, 0.92);
+      transform: scaleX(0.98) scaleY(1.02);
+    }
+
+    .journey[data-progress="1"] .seal-strain {
+      opacity: 0.38;
+      transform: translateX(-50%) rotate(6deg) scaleY(0.44);
+    }
+
+    .journey[data-progress="1"] .seal-adhesion {
+      opacity: 0.18;
+      transform: translateX(-50%) scaleY(0.42);
     }
 
     .journey[data-progress="2"] .seal {
-      transform: translateX(-50%) scale(0.86);
-      opacity: 0.76;
+      --seal-y: -2px;
+      --seal-scale: 0.985;
+      --seal-rotate: 0.9deg;
+      --main-crack-offset: 8;
+      --main-crack-opacity: 0.84;
+      --branch-crack-offset: 8;
+      --branch-crack-opacity: 0.72;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,0.34),
+        inset 0 -8px 14px rgba(177, 88, 105, 0.22),
+        0 15px 22px rgba(214, 145, 159, 0.30);
+      animation: sealTension 1500ms ease-in-out infinite;
+    }
+
+    .journey[data-progress="2"] .seal::before {
+      border-color: rgba(255, 220, 230, 0.86);
+      transform: scaleX(0.96) scaleY(1.04) rotate(-1deg);
+    }
+
+    .journey[data-progress="2"] .seal-heart {
+      fill: rgba(255, 242, 247, 0.90);
+      transform: translateY(-1px) scale(0.96);
+    }
+
+    .journey[data-progress="2"] .seal-strain {
+      opacity: 0.48;
+      transform: translateX(-50%) rotate(5deg) scaleY(0.72);
+    }
+
+    .journey[data-progress="2"] .seal-adhesion {
+      opacity: 0.42;
+      transform: translateX(-50%) scaleY(0.88);
+    }
+
+    .journey[data-progress="2"] .seal-flake-one,
+    .journey[data-progress="2"] .seal-flake-two {
+      opacity: 0.62;
+      transform: translate3d(0, 0, 0) scale(0.76) rotate(var(--flake-rotate));
     }
 
     .journey[data-progress="3"] .seal {
-      transform: translateX(-50%) scale(0.72);
-      opacity: 0.42;
+      --seal-y: -3px;
+      --seal-scale: 0.98;
+      --seal-rotate: -1.4deg;
+      --main-crack-offset: 0;
+      --main-crack-opacity: 0.98;
+      --branch-crack-offset: 0;
+      --branch-crack-opacity: 0.90;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,0.28),
+        inset 0 -8px 14px rgba(177, 88, 105, 0.26),
+        0 18px 28px rgba(194, 108, 126, 0.28);
+      animation: sealFinalCrack 680ms ease-out both;
     }
 
-    .journey.is-opening .seal,
+    .journey[data-progress="3"] .seal::before {
+      border-color: rgba(255, 214, 226, 0.72);
+      transform: scaleX(0.94) scaleY(1.06) rotate(-2deg);
+    }
+
+    .journey[data-progress="3"] .seal-heart {
+      fill: rgba(255, 235, 242, 0.82);
+      opacity: 0.86;
+      transform: translate(-1px, -2px) rotate(-3deg) scale(0.94);
+    }
+
+    .journey[data-progress="3"] .seal-strain {
+      opacity: 0.62;
+      transform: translateX(-50%) rotate(4deg) scaleY(1);
+    }
+
+    .journey[data-progress="3"] .seal-adhesion {
+      opacity: 0.55;
+      transform: translateX(-50%) scaleY(1.1);
+    }
+
+    .journey[data-progress="3"] .seal-flake {
+      opacity: 0.78;
+      transform: translate3d(0, 0, 0) scale(0.84) rotate(var(--flake-rotate));
+    }
+
+    .journey.is-opening .seal {
+      opacity: 1;
+      animation: sealPeelAway 760ms cubic-bezier(.18,.74,.22,1) forwards;
+      filter: drop-shadow(0 14px 18px rgba(179, 91, 108, 0.22));
+    }
+
+    .journey.is-opening .seal-adhesion {
+      animation: sealAdhesionSnap 620ms cubic-bezier(.25,.72,.22,1) forwards;
+    }
+
+    .journey.is-opening .seal-flake {
+      animation: sealFlakeRelease 820ms ease-out forwards;
+    }
+
     .journey.is-opened .seal {
       opacity: 0;
-      transform: translateX(-50%) scale(0.64);
+      transform: translateX(-50%) translateY(-48px) rotate(15deg) scale(0.78);
+      visibility: hidden;
+      animation: none;
     }
 
     .scene-caption {
@@ -1252,6 +1498,11 @@
         transform: scale(1.16);
       }
 
+      .seal {
+        bottom: 30.2%;
+        width: clamp(76px, 10.8%, 90px);
+      }
+
       .desk-stage {
         min-height: 620px;
       }
@@ -1287,6 +1538,11 @@
 
       .envelope-frame {
         transform: scale(1.05);
+      }
+
+      .seal {
+        bottom: 31.5%;
+        width: clamp(72px, 12.6%, 88px);
       }
 
       .scene-caption {
@@ -1350,11 +1606,45 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto !important;
+      }
+
       *, *::before, *::after {
         animation-duration: 1ms !important;
         animation-iteration-count: 1 !important;
-        transition-duration: 1ms !important;
-        scroll-behavior: auto !important;
+        transition-duration: 180ms !important;
+        transition-delay: 0ms !important;
+      }
+
+      .petal-fragment,
+      .burst-heart,
+      .memory-ghost,
+      .envelope-scene.shake,
+      .journey[data-progress="1"] .seal,
+      .journey[data-progress="2"] .seal,
+      .journey[data-progress="3"] .seal,
+      .journey.is-opening .seal,
+      .journey.is-opening .seal-adhesion,
+      .journey.is-opening .seal-flake {
+        animation: none !important;
+      }
+
+      .journey.is-opening .seal,
+      .journey.is-opened .seal {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-12px) rotate(4deg) scale(0.9);
+      }
+
+      .journey.is-opening .seal-flake,
+      .journey.is-opened .seal-flake {
+        opacity: 0;
+      }
+
+      .journey.is-opening .envelope-flap,
+      .journey.is-opened .envelope-flap {
+        transform: rotateX(180deg);
+        transition-delay: 0ms !important;
       }
     }
 
@@ -1376,6 +1666,60 @@
       36% { transform: translate3d(3px, -1px, 0) rotate(0.18deg); }
       54% { transform: translate3d(-2px, 1px, 0) rotate(-0.12deg); }
       72% { transform: translate3d(1px, 0, 0) rotate(0.08deg); }
+    }
+
+    @keyframes sealMicroShake {
+      0%, 100% { transform: translateX(-50%) translateY(0) rotate(-0.6deg) scale(0.99); }
+      32% { transform: translateX(calc(-50% - 1px)) translateY(-0.5px) rotate(-1.1deg) scale(0.992); }
+      62% { transform: translateX(calc(-50% + 1px)) translateY(0.5px) rotate(-0.2deg) scale(0.988); }
+    }
+
+    @keyframes sealTension {
+      0%, 100% { transform: translateX(-50%) translateY(-2px) rotate(0.9deg) scale(0.985); }
+      28% { transform: translateX(calc(-50% - 1.5px)) translateY(-3px) rotate(0.2deg) scale(0.99); }
+      58% { transform: translateX(calc(-50% + 1.5px)) translateY(-1px) rotate(1.5deg) scale(0.982); }
+    }
+
+    @keyframes sealFinalCrack {
+      0% { transform: translateX(-50%) translateY(-2px) rotate(0.9deg) scale(0.985); }
+      28% { transform: translateX(calc(-50% - 2px)) translateY(-4px) rotate(-2.2deg) scale(1.01); }
+      54% { transform: translateX(calc(-50% + 2px)) translateY(-2px) rotate(1.6deg) scale(0.992); }
+      100% { transform: translateX(-50%) translateY(-3px) rotate(-1.4deg) scale(0.98); }
+    }
+
+    @keyframes sealPeelAway {
+      0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-3px) rotate(-1.4deg) scale(0.98);
+      }
+      26% {
+        opacity: 1;
+        transform: translateX(calc(-50% - 5px)) translateY(-12px) rotate(-5deg) scale(1.01);
+      }
+      58% {
+        opacity: 0.95;
+        transform: translateX(calc(-50% + 11px)) translateY(-27px) rotate(8deg) scale(0.93);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(calc(-50% + 24px)) translateY(-56px) rotate(16deg) scale(0.76);
+        filter: blur(0.7px) drop-shadow(0 18px 18px rgba(179, 91, 108, 0.16));
+      }
+    }
+
+    @keyframes sealAdhesionSnap {
+      0% { opacity: 0.56; transform: translateX(-50%) scaleY(1.1); }
+      48% { opacity: 0.42; transform: translateX(calc(-50% - 2px)) scaleY(1.34) skewX(-8deg); }
+      100% { opacity: 0; transform: translateX(calc(-50% + 5px)) scaleY(0.12) skewX(18deg); }
+    }
+
+    @keyframes sealFlakeRelease {
+      0% { opacity: 0.82; transform: translate3d(0, 0, 0) scale(0.84) rotate(var(--flake-rotate)); }
+      38% { opacity: 1; }
+      100% {
+        opacity: 0;
+        transform: translate3d(var(--flake-x), var(--flake-y), 0) scale(0.52) rotate(var(--flake-release-rotate));
+      }
     }
 
     @keyframes heartBurst {
@@ -1549,14 +1893,25 @@
                     <div class="envelope-doodles right" aria-hidden="true">
                       <span>♡</span><span>♡</span><span>♥</span>
                     </div>
-
-                    <div id="seal" class="seal">
-                      <svg viewBox="0 0 64 58" aria-hidden="true" focusable="false">
-                        <path class="seal-heart" d="M32 52.5S7.5 37.8 7.5 21.6C7.5 12.7 13.4 7 21.1 7c4.7 0 8.8 2.5 10.9 6.3C34.1 9.5 38.2 7 42.9 7c7.7 0 13.6 5.7 13.6 14.6C56.5 37.8 32 52.5 32 52.5Z" />
-                      </svg>
-                    </div>
                   </div>
                 </div>
+              </div>
+
+              <div id="seal" class="seal">
+                  <span class="seal-adhesion" aria-hidden="true"></span>
+                  <span class="seal-strain" aria-hidden="true"></span>
+                  <svg class="seal-cracks" viewBox="0 0 74 74" aria-hidden="true" focusable="false">
+                    <path class="seal-crack seal-crack-main" d="M38 12 C34 19 41 24 35 31 C42 38 31 44 36 62" />
+                    <path class="seal-crack seal-crack-branch" d="M35 31 C28 30 25 26 19 28" />
+                    <path class="seal-crack seal-crack-branch" d="M38 42 C45 42 49 47 55 49" />
+                    <path class="seal-crack seal-crack-branch" d="M39 23 C45 21 48 18 53 19" />
+                  </svg>
+                  <svg class="seal-heart-icon" viewBox="0 0 64 58" aria-hidden="true" focusable="false">
+                    <path class="seal-heart" d="M32 52.5S7.5 37.8 7.5 21.6C7.5 12.7 13.4 7 21.1 7c4.7 0 8.8 2.5 10.9 6.3C34.1 9.5 38.2 7 42.9 7c7.7 0 13.6 5.7 13.6 14.6C56.5 37.8 32 52.5 32 52.5Z" />
+                  </svg>
+                  <span class="seal-flake seal-flake-one" aria-hidden="true"></span>
+                  <span class="seal-flake seal-flake-two" aria-hidden="true"></span>
+                  <span class="seal-flake seal-flake-three" aria-hidden="true"></span>
               </div>
 
               <div id="quizCard" class="quiz-card">
@@ -1600,7 +1955,7 @@
               </div>
 
               <!-- 설계 메모: 퀴즈는 봉투 위 투명 레이어에 배치 -->
-              <!-- 설계 메모: 정답 단계마다 플랩과 봉인이 점진적으로 열림 -->
+              <!-- 설계 메모: 정답 단계마다 봉인이 먼저 약해지고, 마지막에 봉인 해제 후 플랩이 열림 -->
             </div>
           </div>
         </div>
@@ -1854,10 +2209,10 @@
     }
 
     function getProgressMessage(step) {
-      if (step === 0) return '첫 번째 기억을 적으면 봉투가 조용히 열리기 시작해요.';
-      if (step === 1) return '좋아요. 이제 두 번째 기억을 남기면 접힌 플랩이 더 가볍게 들려요.';
-      if (step === 2) return '마지막 마음만 남기면, 편지가 너에게 완전히 펼쳐져요.';
-      return '봉인이 모두 풀렸어요. 편지를 펼치고 있어요.';
+      if (step === 0) return '첫 번째 기억을 적으면 봉인에 아주 작은 금이 생겨요.';
+      if (step === 1) return '좋아요. 봉인이 살짝 약해졌어요. 두 번째 기억으로 균열을 더 벌려줘요.';
+      if (step === 2) return '마지막 마음만 남기면, 봉인이 먼저 풀리고 그 뒤 플랩이 열려요.';
+      return '봉인이 모두 풀렸어요. 이제 플랩이 조용히 열리고 있어요.';
     }
 
     function getStatusLabel(step) {
@@ -2003,16 +2358,25 @@
       opened = true;
       journey.classList.add('is-opening');
       quizCard.classList.add('hide');
-      statusBadge.textContent = '편지를 여는 중';
+      statusBadge.textContent = '봉인을 푸는 중';
       flashSuccess();
+
+      const flapLabelDelay = prefersReducedMotion ? 120 : 760;
+      const openingDelay = prefersReducedMotion ? 560 : 1660;
+
+      setTimeout(() => {
+        if (journey.classList.contains('is-opening')) {
+          statusBadge.textContent = '플랩을 여는 중';
+        }
+      }, flapLabelDelay);
 
       setTimeout(() => {
         journey.classList.remove('is-opening');
         journey.classList.add('is-opened');
         statusBadge.textContent = '편지가 열렸어요';
-        sceneAfter.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        sceneAfter.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
         playLetterVideoSequence();
-      }, 1100);
+      }, openingDelay);
     }
 
     function submitStep(step) {
@@ -2034,7 +2398,7 @@
       if (step < 3) {
         setTimeout(() => goToStep(step + 1), 420);
       } else {
-        setTimeout(openEnvelope, 520);
+        setTimeout(openEnvelope, prefersReducedMotion ? 260 : 720);
       }
     }
 
